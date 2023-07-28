@@ -3,7 +3,17 @@ import styles from './App.module.css'
 
 const API_URL = 'https://api.npoint.io/97d89162575a9d816661';
 
-const DESIRED_CURRENCIES = ['$', 'u$s'];
+const isDesiredAccount = (acc) => {
+  if(acc.moneda !== 'u$s' && acc.moneda !== '$'){
+    return false;
+  }
+
+  if(acc.tipo_letras !== 'CA' && acc.tipo_letras !== 'CC'){
+    return false;
+  }
+  
+  return true;
+}
 
 function App() {
 
@@ -17,7 +27,7 @@ function App() {
     })
     .then(resp => resp.json())
     .then(data => {
-        const filteredAccounts = data.cuentas.filter(account => DESIRED_CURRENCIES.includes(account.moneda));
+        const filteredAccounts = data.cuentas.filter(account => isDesiredAccount(account));
         setAccounts(filteredAccounts);
         setLength(data.cuentas.length);
     });
