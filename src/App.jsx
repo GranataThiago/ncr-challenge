@@ -18,6 +18,7 @@ const isDesiredAccount = (acc) => {
 function App() {
 
   const [accounts, setAccounts] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [length, setLength] = useState(0);
 
 
@@ -29,9 +30,17 @@ function App() {
     .then(data => {
         const filteredAccounts = data.cuentas.filter(account => isDesiredAccount(account));
         setAccounts(filteredAccounts);
-        setLength(data.cuentas.length);
+        setLength(filteredAccounts.length);
     });
   }, [])
+
+  const onAccountSelected = (account) => {
+    setSelectedAccount(account);
+  }
+
+  const onLeaveClick = () => {
+    setSelectedAccount(null);
+  }
 
 
   return (
@@ -44,27 +53,32 @@ function App() {
           <p style={{'fontSize': '1.5rem'}}>Consulta de Saldo</p>
           <p style={{fontWeight: 'bold'}}>Seleccione la Cuenta a Consultar</p>
         </div>
-
-        <div className={styles.accountsList}>
+        {
+          selectedAccount 
+          ? <div>
+            <p>Saldo de la cuenta: {selectedAccount.saldo}</p>
+            <p>Tipo de cuenta: {selectedAccount.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
+            <p>Número de cuenta: {selectedAccount.n}</p>
+          </div>
+          : <div className={styles.accountsList}>
           {
             accounts.slice(0, 5).map(account => (
-              <button className={styles.account} key={account.n}>
-                <p>Cuenta Corriente</p>
+              <button onClick={() => onAccountSelected(account)} className={styles.account} key={account.n}>
+                <p>{account.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
                 <p>Nro: {account.n}</p>
               </button>
             ))
           }
 
 
-          <button className={styles.account}>
-            <p>Más opciones &#187;</p>
-          </button>
-        </div>
-
-        <hr />
-
+            <button className={styles.account}>
+              <p>Más opciones &#187;</p>
+            </button>
+          </div>
+        }
+        
         <footer className={styles.footer}>
-          <button>Salir</button>
+          <button onClick={onLeaveClick}>Salir</button>
         </footer>
 
       </main>
