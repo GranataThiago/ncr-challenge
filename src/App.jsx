@@ -15,11 +15,23 @@ const isDesiredAccount = (acc) => {
   return true;
 }
 
+const paginate = (total, page, itemsPerPage = 4) => {
+  if(page === 1) return { firstIndex: 0, lastIndex: 5 };
+  const lastIndex = Math.max(0, Math.min(page * itemsPerPage, total));
+  const firstIndex = lastIndex - itemsPerPage;
+
+  return { firstIndex, lastIndex };
+}
+
 function App() {
 
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
-  const [length, setLength] = useState(0);
+  const [page, setPage] = useState(1);
+  const [indexes, setIndexes] = useState({
+    first: 0,
+    last: 5,
+  });
 
 
   useEffect(() => {
@@ -30,7 +42,6 @@ function App() {
     .then(data => {
         const filteredAccounts = data.cuentas.filter(account => isDesiredAccount(account));
         setAccounts(filteredAccounts);
-        setLength(filteredAccounts.length);
     });
   }, [])
 
@@ -42,6 +53,17 @@ function App() {
     setSelectedAccount(null);
   }
 
+  const onPageChanged = (isNext = false) => {
+    const newPage = (isNext) ? page + 1 : page - 1;
+    const { length } = accounts;
+    const { firstIndex, lastIndex } = paginate(length, newPage)
+    setPage(newPage);
+    setIndexes({ first: firstIndex, last: lastIndex });
+  }
+
+  const currentAccounts = accounts.slice(indexes.first, indexes.last);
+
+  console.log({page, indexes, length: accounts.length})
 
   return (
     <>
@@ -56,24 +78,33 @@ function App() {
         {
           selectedAccount 
           ? <div>
-            <p>Saldo de la cuenta: {selectedAccount.saldo}</p>
+            <p>Saldo de la cuenta: ${selectedAccount.saldo}</p>
             <p>Tipo de cuenta: {selectedAccount.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
             <p>Número de cuenta: {selectedAccount.n}</p>
           </div>
           : <div className={styles.accountsList}>
+
+            {
+            page !== 1 && <button className={styles.account} onClick={() => onPageChanged(false)}>
+              <p>&#171; Opciones anteriores</p>
+            </button>
+            }
+
           {
-            accounts.slice(0, 5).map(account => (
-              <button onClick={() => onAccountSelected(account)} className={styles.account} key={account.n}>
+            currentAccounts?.map((account, index) => (
+              <button onClick={() => onAccountSelected(account)} className={styles.account} key={index}>
                 <p>{account.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
                 <p>Nro: {account.n}</p>
               </button>
             ))
           }
 
-
-            <button className={styles.account}>
-              <p>Más opciones &#187;</p>
-            </button>
+            {
+              accounts.length !== indexes.last && 
+              <button className={styles.account} onClick={() => onPageChanged(true)}>
+                <p>Más opciones &#187;</p>
+              </button>
+            }
           </div>
         }
         

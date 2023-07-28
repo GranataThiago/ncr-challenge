@@ -1,8 +1,37 @@
-# React + Vite
+# NCR Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Para ejecutar el proyecto correr el comando:
 
-Currently, two official plugins are available:
+```
+  $ yarn dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Consideraciones
+
+¿Como se tendrian que tratar las cuentas con datos incorrectos/inválidos/mal formateados? Por ejemplo: 
+
+```
+{
+    "e": "1",
+    "n": "872378326706",
+    "t": "01",
+    "saldo": "2-5-0",
+    "moneda": "$",
+    "tipo_letras": "CA"
+}
+```
+
+En los ejemplos anteriores, el saldo no estaria formateado correctamente como un número.
+
+```
+{
+    "e": "1",
+    "n": " ",
+    "t": "01",
+    "saldo": "6458925", 
+    "moneda": "$",
+    "tipo_letras": "CC"
+}
+```
+
+En el ejemplo, el número de cuenta está vacio. Por lo que no seria válida.
