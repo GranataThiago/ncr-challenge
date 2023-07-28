@@ -11,14 +11,16 @@ const isDesiredAccount = (acc) => {
   if(acc.tipo_letras !== 'CA' && acc.tipo_letras !== 'CC'){
     return false;
   }
+
+  if(acc.n?.trim() === '') return false;
   
   return true;
 }
 
-const paginate = (total, page, itemsPerPage = 4) => {
+const paginate = (total, page, lastLastIndex, itemsPerPage = 4) => {
   if(page === 1) return { firstIndex: 0, lastIndex: 5 };
   const lastIndex = Math.max(0, Math.min(page * itemsPerPage, total));
-  const firstIndex = lastIndex - itemsPerPage;
+  const firstIndex = lastLastIndex;
 
   return { firstIndex, lastIndex };
 }
@@ -56,7 +58,7 @@ function App() {
   const onPageChanged = (isNext = false) => {
     const newPage = (isNext) ? page + 1 : page - 1;
     const { length } = accounts;
-    const { firstIndex, lastIndex } = paginate(length, newPage)
+    const { firstIndex, lastIndex } = paginate(length, newPage, indexes.last)
     setPage(newPage);
     setIndexes({ first: firstIndex, last: lastIndex });
   }
