@@ -1,0 +1,50 @@
+.heading{
+  background-color: seagreen;
+  color: #ddd;
+  padding: 2rem;
+  width: 100%;
+}
+
+.resume{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+
+  text-align: center;
+}
+
+.resumeHeading{
+  font-size: 2rem;
+  margin: 2rem 0 4rem 0;
+}
+
+
+.accountsList{
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 2rem;
+}
+
+.account{
+  background-color: seagreen;
+  border: none;
+  font-size: 1.5rem;
+  padding: 2rem;
+}
+
+.footer{
+  margin-top: 4rem;
+  width: 90%;
+  display: flex;
+  justify-content: start;
+}
+
+.footer > button{
+  background-color: seagreen;
+  padding: 1.5rem 3rem;
+  border: none;
+  font-size: 1.5rem;
+}
