@@ -1,26 +1,26 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './App.module.css'
 
 const API_URL = 'https://api.npoint.io/97d89162575a9d816661';
 
-const LOOKING_CURRENCY = ['u$s', '$']
+const DESIRED_CURRENCIES = ['$', 'u$s'];
 
 function App() {
 
-  const getAccountsData = async() => {
-    const response = await fetch(API_URL, {
-      method: 'GET'
-    })
+  const [accounts, setAccounts] = useState([]);
+  const [length, setLength] = useState(0);
 
-    const data = await response.json();
-
-    console.log(data)
-  }
 
   useEffect(() => {
-
-    getAccountsData();
-
+    fetch(API_URL, {
+      method: 'GET'
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        const filteredAccounts = data.cuentas.filter(account => DESIRED_CURRENCIES.includes(account.moneda));
+        setAccounts(filteredAccounts);
+        setLength(data.cuentas.length);
+    });
   }, [])
 
 
@@ -36,30 +36,15 @@ function App() {
         </div>
 
         <div className={styles.accountsList}>
-          <button className={styles.account}>
-            <p>Cuenta Corriente</p>
-            <p>Nro: 872378326704</p>
-          </button>
+          {
+            accounts.slice(0, 5).map(account => (
+              <button className={styles.account} key={account.n}>
+                <p>Cuenta Corriente</p>
+                <p>Nro: {account.n}</p>
+              </button>
+            ))
+          }
 
-          <button className={styles.account}>
-            <p>Cuenta Corriente</p>
-            <p>Nro: 872378326704</p>
-          </button>
-
-          <button className={styles.account}>
-            <p>Cuenta Corriente</p>
-            <p>Nro: 872378326704</p>
-          </button>
-
-          <button className={styles.account}>
-            <p>Cuenta Corriente</p>
-            <p>Nro: 872378326704</p>
-          </button>
-
-          <button className={styles.account}>
-            <p>Cuenta Corriente</p>
-            <p>Nro: 872378326704</p>
-          </button>
 
           <button className={styles.account}>
             <p>Más opciones &#187;</p>
