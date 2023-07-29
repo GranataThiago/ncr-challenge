@@ -25,7 +25,6 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
 
-
   useEffect(() => {
     fetch(API_URL, {
       method: 'GET'
