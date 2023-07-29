@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types'
 
+export const getFormattedAccountType = (currency, type) => {
+    const accountCurrency = currency === 'u$s' ? 'en dolares' : 'en pesos';
+
+    return type === 'CA' ? `Caja de Ahorro ${accountCurrency}` : `Cuenta Corriente`;
+}
+
 export const AccountDetails = ({ account }) => {
 
-    const accountCurrency = account.moneda === 'u$s' ? 'en dolares' : 'en pesos';
-    const accountType = account.tipo_letras === 'CA' ? `Caja de Ahorro ${accountCurrency}` : `Cuenta Corriente`;
+    const accountType = getFormattedAccountType(account.moneda, account.tipo_letras);
 
 
     return (
