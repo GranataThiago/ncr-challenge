@@ -12,7 +12,7 @@ export const AccountDetails = ({ account }) => {
 
     return (
         <div>
-            <p>Saldo de la cuenta: ${account.saldo}</p>
+            <p>Saldo de la cuenta: ${isNaN(account.saldo) ? 0 : account.saldo}</p>
             <p>Tipo de cuenta: {accountType}</p>
             <p>Número de cuenta: {account.n}</p>
         </div>
