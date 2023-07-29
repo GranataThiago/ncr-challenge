@@ -134,5 +134,11 @@ describe('AccountsList', () => {
         expect(screen.queryByText(/Opciones anteriores/)).toBeNull();
     })
 
+    test('should hide list', () => {
+        const accountButtons = screen.queryAllByText(/Cuenta Corriente|Caja de Ahorro/i);
+        fireEvent.click(accountButtons[0]);
+        expect(screen.queryByText(/accountButtons[0].innerText/i)).toBeNull();
+    })
+
 })
 
