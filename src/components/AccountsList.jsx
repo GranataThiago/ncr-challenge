@@ -33,7 +33,7 @@ export const AccountsList = ({accounts, onAccountSelected}) => {
         <div className={styles.accountsList}>
             {
                 page !== 1 && 
-                <Button onClick={() => onPageChanged(false)}>
+                <Button data-testid='back-page' onClick={() => onPageChanged(false)}>
                     <p>&#171; Opciones anteriores</p>
                 </Button>
             }
@@ -49,7 +49,7 @@ export const AccountsList = ({accounts, onAccountSelected}) => {
 
             {
             accounts.length !== indexes.last && 
-            <Button onClick={() => onPageChanged(true)}>
+            <Button data-testid='next-page' onClick={() => onPageChanged(true)}>
                 <p>Más opciones &#187;</p>
             </Button>
             }
@@ -62,3 +62,4 @@ AccountsList.propTypes = {
     accounts: PropTypes.array,
     onAccountSelected: PropTypes.func
 }
+

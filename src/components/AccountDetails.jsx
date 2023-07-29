@@ -10,7 +10,6 @@ export const AccountDetails = ({ account }) => {
 
     const accountType = getFormattedAccountType(account.moneda, account.tipo_letras);
 
-
     return (
         <div>
             <p>Saldo de la cuenta: ${account.saldo}</p>
