@@ -11,10 +11,10 @@ export const AccountsList = ({accounts, onAccountSelected}) => {
         last: 5,
     });
 
-    const paginate = (total, page, itemsPerPage = 4) => {
-        if(page === 1) return { firstIndex: 0, lastIndex: 5 };
-        const lastIndex = Math.max(0, Math.min(page * itemsPerPage, total));
-        const firstIndex = indexes.last;
+    const paginate = (total, newPage, itemsPerPage = 4) => {
+        if(newPage === 1) return { firstIndex: 0, lastIndex: 5 };
+        const firstIndex = page > newPage ? indexes.first - itemsPerPage : indexes.last;
+        const lastIndex = Math.max(0, Math.min(firstIndex + itemsPerPage, total));
       
         return { firstIndex, lastIndex };
     }
@@ -28,7 +28,7 @@ export const AccountsList = ({accounts, onAccountSelected}) => {
     }
 
     const currentAccounts = accounts.slice(indexes.first, indexes.last);
-
+    
     return (
         <div className={styles.accountsList}>
             {

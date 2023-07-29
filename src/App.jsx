@@ -3,6 +3,7 @@ import styles from './App.module.css'
 import { Button, Loading } from './components/ui';
 import { AccountsList } from './components/AccountsList';
 import { AccountDetails } from './components/AccountDetails';
+import { SAMPLE_ACCOUNTS } from './helpers/mockData';
 
 const API_URL = 'https://api.npoint.io/97d89162575a9d816661';
 
