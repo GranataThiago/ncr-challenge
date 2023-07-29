@@ -1,9 +1,14 @@
 # NCR Challenge
 
-Para ejecutar el proyecto correr el comando:
+Para iniciar el proyecto ejecutar el comando:
 
 ```
   $ yarn dev
+```
+
+Para correr las pruebas ejecutar el comando: 
+```
+  $ yarn test
 ```
 
 ## Consideraciones
