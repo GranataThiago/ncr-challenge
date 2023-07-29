@@ -44,7 +44,6 @@ function App() {
     setSelectedAccount(account);
   }
 
-
   return (
     <>
       <header className={styles.heading}>
@@ -59,7 +58,7 @@ function App() {
         {
           selectedAccount 
           ? <AccountDetails account={selectedAccount} />
-          : <AccountsList accounts={accounts} onAccountSelected={onAccountSelected}/>
+          : <AccountsList accounts={accounts} onAccountSelected={onAccountSelected} />
         }
         
         <footer className={styles.footer}>
