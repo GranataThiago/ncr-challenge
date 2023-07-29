@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './App.module.css'
-import { Button } from './components/ui/Button';
+import { Button, Loading } from './components/ui';
 import { AccountsList } from './components/AccountsList';
 import { AccountDetails } from './components/AccountDetails';
 
@@ -24,8 +24,10 @@ function App() {
 
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(API_URL, {
       method: 'GET'
     })
@@ -33,6 +35,7 @@ function App() {
     .then(data => {
         const filteredAccounts = data.cuentas.filter(account => isDesiredAccount(account));
         setAccounts(filteredAccounts);
+        setIsLoading(false);
     });
   }, [])
 
@@ -50,22 +53,29 @@ function App() {
         <h1>NCR Challenge</h1>
       </header>
       <main className={styles.resume}>
-        <section className={styles.resumeHeading}>
-          <p style={{fontSize: '1.5rem'}}>Consulta de Saldo</p>
-          <p style={{fontWeight: 'bold'}}> {selectedAccount ? 'Este es tu saldo actual' : 'Seleccione la Cuenta a Consultar'}</p>
-        </section>
-
         {
-          selectedAccount 
-          ? <AccountDetails account={selectedAccount} />
-          : <AccountsList accounts={accounts} onAccountSelected={onAccountSelected} />
-        }
-        
-        <footer className={styles.footer}>
-          <Button onClick={onLeaveClick}>Salir</Button>
-        </footer>
+          isLoading 
+          ? <Loading />
+          : 
+          <>
+            <section className={styles.resumeHeading}>
+              <p style={{fontSize: '1.5rem'}}>Consulta de Saldo</p>
+              <p style={{fontWeight: 'bold'}}> {selectedAccount ? 'Este es tu saldo actual' : 'Seleccione la Cuenta a Consultar'}</p>
+            </section>
 
+            {
+              selectedAccount 
+              ? <AccountDetails account={selectedAccount} />
+              : <AccountsList accounts={accounts} onAccountSelected={onAccountSelected} />
+            }
+            
+            <footer className={styles.footer}>
+              <Button onClick={onLeaveClick}>Salir</Button>
+            </footer>
+          </>
+        }
       </main>
+
     </>
   )
 }
