@@ -52,11 +52,11 @@ function App() {
         <h1>NCR Challenge</h1>
       </header>
       <main className={styles.resume}>
-        <div className={styles.resumeHeading}>
+        <section className={styles.resumeHeading}>
           <p style={{fontSize: '1.5rem'}}>Consulta de Saldo</p>
           <p style={{fontWeight: 'bold'}}> {selectedAccount ? 'Este es tu saldo actual' : 'Seleccione la Cuenta a Consultar'}</p>
-        </div>
-        
+        </section>
+
         {
           selectedAccount 
           ? <AccountDetails account={selectedAccount} />

@@ -29,22 +29,21 @@ export const AccountsList = ({accounts, onAccountSelected}) => {
 
     const currentAccounts = accounts.slice(indexes.first, indexes.last);
 
-
     return (
         <div className={styles.accountsList}>
             {
                 page !== 1 && 
                 <Button onClick={() => onPageChanged(false)}>
-                <p>&#171; Opciones anteriores</p>
+                    <p>&#171; Opciones anteriores</p>
                 </Button>
             }
 
             {
                 currentAccounts?.map((account, index) => (
-                <Button onClick={() => onAccountSelected(account)} key={index}>
-                    <p>{account.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
-                    <p>Nro: {account.n}</p>
-                </Button>
+                    <Button onClick={() => onAccountSelected(account)} key={index}>
+                        <p>{account.tipo_letras === 'CA' ? 'Caja de Ahorro' : 'Cuenta Corriente'}</p>
+                        <p>Nro: {account.n}</p>
+                    </Button>
                 ))
             }
 
